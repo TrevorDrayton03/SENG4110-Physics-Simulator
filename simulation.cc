@@ -26,6 +26,14 @@ namespace projectlib
 		return timeToLand;
 	}
 
+	double Simulation::calculateDragForce() {
+		// Fd = Cd(1/2)p(v^2)A
+		double dragCoef = cannonball.getDragCoefficient();
+		double densityOfFluid = DENSITY_OF_AIR;
+		double frontalArea =
+
+	}
+
 
 
 	double Simulation::getGravity() {

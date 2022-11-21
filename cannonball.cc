@@ -7,10 +7,6 @@
 
 #include "cannonball.h"
 
-//const double ROCK_DENSITY = 0.00168;
-//const double GLASS_DENSITY = 0.0025;
-//const double IRON_DENSITY = 0.0078;
-
 namespace projectlib
 {
 	void Cannonball::setDensity() {
@@ -45,10 +41,32 @@ namespace projectlib
 			this->density = GENERIC_DENSITY;
 		}
 	}
+	void Cannonball::setDragCoefficient() {
+		if (this->type == "rock")
+		{
+			this->dragCoefficient = ROCK_COEFFICIENT;
+		}
+		else if (this->type == "glass")
+		{
+			this->dragCoefficient = GLASS_COEFFICIENT;
+		}
+		else if (this->type == "iron")
+		{
+			this->dragCoefficient = IRON_COEFFICIENT;
+		}
+		else
+		{
+			this->dragCoefficient = GENERIC_COEFFICIENT;
+		}
+	}
+	double getDragCoefficient() {
+		return this->dragCoefficient;
+	}
 	Cannonball::Cannonball() {};
 	Cannonball::Cannonball(double gravity, double diameter, std::string type) {
 		setType(type);
 		setDensity();
+		setDragCoefficient();
 		calculateVolume(diameter);
 		calculateWeight(getDensity(), gravity);
 	}

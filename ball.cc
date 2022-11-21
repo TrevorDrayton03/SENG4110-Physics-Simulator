@@ -14,6 +14,7 @@ namespace projectlib
 	Ball::Ball(double gravity) {
 		setDensity();
 		setType();
+		setDragCoefficient();
 		calculateWeight(density, gravity);
 	}
 	double Ball::getDensity() {
@@ -21,6 +22,12 @@ namespace projectlib
 	}
 	void Ball::setDensity() {
 		this->density = GENERIC_DENSITY;
+	}
+	double Ball::getDiameter() {
+		return this->diameter;
+	}
+	void Ball::setDiameter() {
+		this->diameter = GENERIC_DIAMETER;
 	}
 	double Ball::getWeight() {
 		return this->weight;
@@ -39,5 +46,14 @@ namespace projectlib
 	}
 	double Ball::getVolume() {
 		return this->volume;
+	}
+	double Ball::getDragCoefficient() {
+		return this->dragCoefficient;
+	}
+	void Ball::setDragCoefficient() {
+		this->density = GENERIC_DRAG_COEFFICIENT;
+	}
+	double Ball::calculateFrontalArea() {
+
 	}
 }

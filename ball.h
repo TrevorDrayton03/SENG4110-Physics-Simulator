@@ -15,6 +15,9 @@
 #include <cmath>
 
 const double GENERIC_DENSITY = 0.002;
+const double GENERIC_DIAMETER = 10.0;
+const double GENERIC_DRAG_COEFFICIENT = 0.002;
+const double DENSITY_OF_AIR = 1.2; // 1.2 kg/cubic meter for air at NTP
 const std::string GENERIC_TYPE = "generic";
 
 namespace projectlib
@@ -26,19 +29,25 @@ namespace projectlib
 		std::string type;
 		double volume;
 		double diameter;
+		double dragCoefficient;
+		double frontalArea;
 
 	public:
 		Ball();
 		Ball(double gravity);
 		double getDensity();
 		void setDensity();
+		double getDiameter();
+		void setDiameter();
 		double getWeight();
 		void calculateWeight(double density, double gravity);
 		std::string getType();
 		void setType();
 		void calculateVolume(double diameter);
 		double getVolume();
-
+		double getDragCoefficient();
+		void setDragCoefficient();
+		double calculateFrontalArea();
 	};
 	
 }
