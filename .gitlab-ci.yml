@@ -1,12 +1,10 @@
-### lab7 image has our dependencies
-image: registry.seng4110.tru.ca/trevordrayton/docker/seng4110:lab7
+### lab9 image has our dependencies
+image: registry.seng4110.tru.ca/trevordrayton/docker/seng4110:lab9
 
 stages:
   - build
   - test
   - docs
-  - dependency
-  - coverage
 
 build-job:
   stage: build
@@ -16,7 +14,7 @@ build-job:
     - cd build
     - cmake ..
     - make
-    - ./lab7
+    - ./project
 
 unit-test-job:
   stage: test
@@ -43,7 +41,7 @@ docs-job:
       when: always
   script: 
     - cd docs
-    - doxygen /builds/trevordrayton/lab7/docs/Doxyfile
+    - doxygen /builds/trevordrayton/Project/docs/Doxyfile
     - doxygen
     - source /usr/bin/make-json.bash token=$API_TOKEN project=$CI_PROJECT_ID job=$CI_JOB_ID name=$CI_PROJECT_NAME secret=$WEBHOOK_SECRET slug=$CI_PROJECT_PATH_SLUG > out.json
   artifacts:
@@ -51,35 +49,3 @@ docs-job:
       - docs/
     expire_in: 30min
     
-dependency-job:
-  stage: dependency
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "dependency"'
-      when: always
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: always
-  script: 
-    - mkdir build
-    - cd build
-    - cmake ..
-    - make graph
-  artifacts:
-    paths:
-      - build/dependency_graph.png
-    expire_in: 30min
-coverage-job:
-  stage: coverage
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "coverage"'
-      when: always
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: always
-  script: 
-    - mkdir coverage
-    - cd coverage
-    - cmake ..
-    - make IntegrationNextDate_coverage
-  artifacts:
-    paths:
-      - coverage/IntegrationNextDate_coverage
-    expire_in: 30min

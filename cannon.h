@@ -24,6 +24,8 @@ namespace projectlib
 		Cannon(double height, double angle);
 		double getAngle();
 		void setAngle(double angle);
+		double getHeight();
+		void setHeight(double height);
 	};
 }
 #endif 

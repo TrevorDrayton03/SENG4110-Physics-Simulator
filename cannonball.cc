@@ -40,6 +40,10 @@ namespace projectlib
 		{
 			this->density = IRON_DENSITY;
 		}
+		else
+		{
+			this->density = GENERIC_DENSITY;
+		}
 	}
 	Cannonball::Cannonball() {};
 	Cannonball::Cannonball(double gravity, double diameter, std::string type) {

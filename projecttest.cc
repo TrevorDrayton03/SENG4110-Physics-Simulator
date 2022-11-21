@@ -11,8 +11,33 @@
 
 using namespace projectlib;
 
+const double MIN_GRAVITY = 0.0;
+const double MIN_INITIAL_VELOCITY = 0.0;
+const double MIN_ANGLE = 0.0;
+const double MIN_HEIGHT = 0.0;
 
-TEST(Slice, Slice1) {
+const double MIN_PLUS_GRAVITY = 1.0;
+const double MIN_PLUS_INITIAL_VELOCITY = 1.0;
+const double MIN_PLUS_ANGLE = 1.0;
+const double MIN_PLUS_HEIGHT = 1.0;
+
+const double MAX_GRAVITY = 0.0;
+const double MAX_INITIAL_VELOCITY = 200.0;
+const double MAX_ANGLE = 90.0;
+const double MAX_HEIGHT = 10.0;
+
+const double MAX_MINUS_GRAVITY = 0;
+const double MAX_MINUS_INITIAL_VELOCITY = 199.0;
+const double MAX_MINUS_ANGLE = 179.0;
+const double MAX_MINUS_HEIGHT = 9.0;
+
+const double NOMINAL_GRAVITY = 9.8;
+const double NOMINAL_INITIAL_VELOCITY = 125.0;
+const double NOMINAL_ANGLE = 45.0;
+const double NOMINAL_HEIGHT = 5.0;
+
+
+TEST(BoundaryValue, Standard) {
 	EXPECT_EQ(Slice1(), 45.00);
 }
 //TEST(Slice, Slice2) {

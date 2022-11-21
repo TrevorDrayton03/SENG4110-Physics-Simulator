@@ -11,7 +11,7 @@ namespace projectlib
 {
 	Cannon::Cannon() {};
 	Cannon::Cannon(double height, double angle) {
-		this->height = height;
+		this->setHeight(height);
 		this->setAngle(angle);
 	}
 
@@ -20,5 +20,11 @@ namespace projectlib
 	}
 	void Cannon::setAngle(double angle) {
 		this->angle = angle;
+	}
+	double Cannon::getHeight() {
+		return this->height;
+	}
+	void Cannon::setHeight(double height) {
+		this->height = height;
 	}
 }
