@@ -10,6 +10,7 @@
 //const std::string GENERIC_TYPE = "generic";
 namespace projectlib
 {
+	Ball::Ball() {};
 	Ball::Ball(double gravity) {
 		setDensity();
 		setType();

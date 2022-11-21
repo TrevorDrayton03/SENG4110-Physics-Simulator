@@ -12,7 +12,9 @@
 #include <stdlib.h>
 #include <sstream>
 #include <string>
-
+#include "cannon.h"
+#include "cannonball.h"
+#include <cmath>
 namespace projectlib
 {
 	class Simulation {
@@ -23,7 +25,7 @@ namespace projectlib
 		double initialVelocity;
 		double time;
 	public:
-		Simulation(double gravity, double height, double diameter, double angle, std::string type);
+		Simulation(double gravity, double height, double diameter, double angle, double initialVelocity, std::string type);
 		double getGravity();
 		void setGravity(double gravity);
 		double getinitialVelocity();
@@ -31,7 +33,7 @@ namespace projectlib
 		double getTime();
 		void setTime(double time);
 		double getTimeTakenToLand(Cannon cannon, Cannonball cannonball);
-		double getVerticalDistanceTravelled(Cannon cannon, Cannonball cannonball);
+		double getVerticalDistanceTravelled();
 		double getHorizontalDistanceTravelled(Cannon cannon, Cannonball cannonball);
 	};
 	

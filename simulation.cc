@@ -6,8 +6,7 @@
 */
 
 #include "simulation.h"
-#include "cannon.h"
-#include "cannonball.h"
+
 /**
 * all units are SI
 * diameter & height in cm
@@ -22,24 +21,7 @@ namespace projectlib
 		this->cannon = Cannon(height, angle);
 		setGravity(gravity);
 		setinitialVelocity(initialVelocity);
-		setTime(0.0);
-	}
-
-	double Simulation::getHorizontalDistanceTravelled(Cannon cannon, Cannonball cannonball) {
-		// x = (vi/2)t
-		// vi = V*Cos(angle)
-		double v = (this->initialVelocity) * cos(cannon.getAngle());
-		double t = getTimeTakenToLand(cannon, cannonball);
-		double x = (v / 2) * t;
-		return x;
-	}
-	double Simulation::getVerticalDistanceTravelled(Cannon cannon, Cannonball cannonball) {
-		// y = (vi)(t) + (1/2)(g)(t^2)
-		// vi = V*Sin(angle)
-		double v = (this->initialVelocity) * sin(cannon.getAngle());
-		double t = getTimeTakenToLand(cannon, cannonball);
-		double y = (v * t) + (1 / 2) * (getGravity()) * pow(t, 2);
-		return y;
+		//setTime(0.0);
 	}
 	double Simulation::getTimeTakenToLand(Cannon cannon, Cannonball cannonball) {
 		// v = g*t + vi -> want to know when v=0
@@ -48,6 +30,23 @@ namespace projectlib
 		double t = (2 * getinitialVelocity() * sin(cannon.getAngle())) / getGravity();
 		return t;
 	}
+	double Simulation::getHorizontalDistanceTravelled(Cannon cannon, Cannonball cannonball) {
+		// x = (vi/2)t
+		// vi = V*Cos(angle)
+		double v = (this->initialVelocity) * cos(cannon.getAngle());
+		double t = this->getTimeTakenToLand(cannon, cannonball);
+		double x = (v / 2) * t;
+		return x;
+	}
+	double Simulation::getVerticalDistanceTravelled() {
+		// y = (vi)(t) + (1/2)(g)(t^2)
+		// vi = V*Sin(angle)
+		double v = (this->initialVelocity) * sin(this->cannon.getAngle());
+		double t = this->getTimeTakenToLand(this->cannon, this->cannonball);
+		double y = (v * t) + (1 / 2) * (getGravity()) * pow(t, 2);
+		return y;
+	}
+
 
 	double Simulation::getGravity() {
 		return this->gravity;
@@ -61,10 +60,10 @@ namespace projectlib
 	void Simulation::setinitialVelocity(double initialVelocity) {
 		this->initialVelocity = initialVelocity;
 	}
-	double Simulation::getTime() {
-		return this->time;
-	}
-	void Simulation::setTime(double time) {
-		this->time = time;
-	}
+	//double Simulation::getTime() {
+	//	return this->time;
+	//}
+	//void Simulation::setTime(double time) {
+	//	this->time = time;
+	//}
 }

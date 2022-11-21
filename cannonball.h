@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <sstream>
 #include <string>
+#include "ball.h"
 
 const double ROCK_DENSITY = 0.00168;
 const double GLASS_DENSITY = 0.0025;
@@ -22,7 +23,10 @@ namespace projectlib
 	class Cannonball: public Ball {
 	private:
 	public:
-		Cannonball::Cannonball(double gravity, double diameter, std::string type);
+		Cannonball();
+		Cannonball(double gravity, double diameter, std::string type);
+		void setDensity();
+		void setType(std::string type);
 	};
 }
 #endif 

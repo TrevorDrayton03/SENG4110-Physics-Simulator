@@ -20,7 +20,8 @@ namespace projectlib
 		double height;
 		double angle;
 	public:
-		Cannon(double height);
+		Cannon();
+		Cannon(double height, double angle);
 		double getAngle();
 		void setAngle(double angle);
 	};

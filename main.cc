@@ -33,5 +33,5 @@ int main(int argc, char **argv)
 
 	Simulation simulation = Simulation(gravityInput, heightInput, diameterInput, angleInput, velocityInput, typeInput);
 	double time = simulation.getVerticalDistanceTravelled();
-	std::cout <<"It took " << time << " seconds to initially strike the ground."
+	std::cout << "It took " << time << " seconds to initially strike the ground. \n";
 };

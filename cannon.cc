@@ -9,9 +9,10 @@
 
 namespace projectlib
 {
+	Cannon::Cannon() {};
 	Cannon::Cannon(double height, double angle) {
 		this->height = height;
-		setAngle(angle);
+		this->setAngle(angle);
 	}
 
 	double Cannon::getAngle() {
