@@ -26,18 +26,21 @@ namespace projectlib
 		double initialVelocity;
 		double time;
 	public:
-		Simulation(double gravity, double height, double diameter, double angle, double initialVelocity, std::string type);
+		Simulation(double gravity, double height, double diameter, double angle, std::string type);
 		double getGravity();
 		void setGravity(double gravity);
 		double getInitialVelocity();
 		void setInitialVelocity(double initialVelocity);
 		double getTime();
+		std::string getType();
 		void setTime(double time);
 		double getTimeTakenToLand();
 		double getVerticalDistanceTravelled();
 		double getHorizontalDistanceTravelled(Cannon cannon, Cannonball cannonball);
 		double calculateDragForce();
 		double calculateTerminalVelocity();
+		double calculateAvgAcceleration();
+		double calculateXDistance();
 	};
 	
 }

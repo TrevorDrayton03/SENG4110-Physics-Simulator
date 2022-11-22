@@ -11,11 +11,11 @@ using namespace projectlib;
 int main(int argc, char **argv)
 {
 	//std::istringstream sin("9.8 iron 10 100 30 5");
-	// gravity, type, diameter, height, angle, velocity
-	std::istringstream sin("9.8 iron 10.0 1.0 30.0 80.0");
+	// gravity, type, diameter, height, angle
+	std::istringstream sin("9.8 iron 10.0 1.0 30.0");
 	std::cin.rdbuf(sin.rdbuf());
 
-	double gravityInput, diameterInput, heightInput, angleInput, velocityInput;
+	double gravityInput, diameterInput, heightInput, angleInput;
 	std::string typeInput;
 
 	std::cout << "Welcome to the Physics Simulator. \n";
@@ -29,13 +29,9 @@ int main(int argc, char **argv)
 	std::cin >> heightInput;
 	std::cout << "Enter the value for the angle of the cannon. \n";
 	std::cin >> angleInput;
-	std::cout << "Enter the value for the initial speed of the cannonball (m/s). \n";
-	std::cin >> velocityInput;
 	std::cout << "Running the simulation...\n";
 
-	Simulation simulation = Simulation(gravityInput, heightInput, diameterInput, angleInput, velocityInput, typeInput);
+	Simulation simulation = Simulation(gravityInput, heightInput, diameterInput, angleInput, typeInput);
 	double time = simulation.getTimeTakenToLand();
-	std::cout << "It took " << time << " seconds for the cannonball to strike the ground. \n";
-	//simulation.calculateDragForce();
-	simulation.calculateTerminalVelocity();
+	std::cout << "It took " << time << " seconds for the " <<simulation.getType()<<" cannonball to strike the ground. \n";
 };

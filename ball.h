@@ -15,6 +15,7 @@
 #include <cmath>
 
 const double GENERIC_DENSITY = 0.002;
+const double GENERIC_INITIAL_VELOCITY = 80.0;
 const double GENERIC_DIAMETER = 10.0;
 const double GENERIC_DRAG_COEFFICIENT = 0.002;
 const double DENSITY_OF_AIR = 1.2; // 1.2 kg/cubic meter for air at NTP
@@ -32,6 +33,7 @@ namespace projectlib
 		double dragCoefficient;
 		double frontalArea;
 		double mass;
+		double initialVelocity;
 
 	public:
 		Ball();
@@ -55,6 +57,7 @@ namespace projectlib
 		double getMass();
 		void setMass(double mass);
 		double calculateMass();
+		void setInitialVelocity();
 	};
 	
 }

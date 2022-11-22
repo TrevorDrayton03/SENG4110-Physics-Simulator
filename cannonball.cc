@@ -9,6 +9,21 @@
 
 namespace projectlib
 {
+	void Cannonball::setInitialVelocity() {
+		if (this->type == "rock")
+		{
+			this->initialVelocity = ROCK_INITIAL_VELOCITY;
+		}
+		else if (this->type == "glass")
+		{
+			this->initialVelocity = GLASS_INITIAL_VELOCITY;
+		}
+		else if (this->type == "iron")
+		{
+			this->initialVelocity = IRON_INITIAL_VELOCITY;
+		}
+		// else should be generic by default
+	}
 	void Cannonball::setDensity() {
 		if (this->type == "rock")
 		{
@@ -22,10 +37,7 @@ namespace projectlib
 		{
 			this->density = IRON_DENSITY;
 		}
-		else
-		{
-			this->density = GENERIC_DENSITY;
-		}
+		// else should be generic by default
 	}
 	void Cannonball::setType(std::string type) {
 		if (!(type == "rock" || type == "glass" || type == "iron")) {
@@ -56,6 +68,9 @@ namespace projectlib
 	double Cannonball::getDragCoefficient() {
 		return this->dragCoefficient;
 	}
+	double Cannonball::getInitialVelocity() {
+		return this->initialVelocity;
+	}
 	void Cannonball::setDiameter(double diameter) {
 		this->diameter = diameter;
 	}
@@ -63,6 +78,7 @@ namespace projectlib
 	Cannonball::Cannonball(double gravity, double diameter, std::string type) {
 		setType(type);
 		setDiameter(diameter);
+		setInitialVelocity();
 		setDensity();
 		setDragCoefficient();
 		setVolume(calculateVolume());

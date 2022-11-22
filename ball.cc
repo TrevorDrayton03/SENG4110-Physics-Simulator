@@ -13,6 +13,7 @@ namespace projectlib
 	Ball::Ball(double gravity) {
 		setDensity();
 		setType();
+		setInitialVelocity();
 		setDragCoefficient();
 		calculateWeight(density, gravity);
 	}
@@ -21,6 +22,9 @@ namespace projectlib
 	}
 	void Ball::setDensity() {
 		this->density = GENERIC_DENSITY;
+	}
+	void Ball::setInitialVelocity() {
+		this->density = GENERIC_INITIAL_VELOCITY;
 	}
 	double Ball::getDiameter() {
 		return this->diameter;
