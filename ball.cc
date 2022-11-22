@@ -6,8 +6,7 @@
 */
 
 #include "ball.h"
-//const double GENERIC_DENSITY = 0.002;
-//const std::string GENERIC_TYPE = "generic";
+
 namespace projectlib
 {
 	Ball::Ball() {};
@@ -26,6 +25,7 @@ namespace projectlib
 	double Ball::getDiameter() {
 		return this->diameter;
 	}
+
 	void Ball::setDiameter() {
 		this->diameter = GENERIC_DIAMETER;
 	}
@@ -41,8 +41,9 @@ namespace projectlib
 	void Ball::setType() {
 		this->type = GENERIC_TYPE;
 	}
-	void Ball::calculateVolume(double diameter) {
-		this->volume = (1 / 6) * 3.14 * pow(diameter, 3);
+	double Ball::calculateVolume() {
+		double vol = (1.0/6.0)*3.14*pow((this->diameter/100.0), 3); // divide by 100 to convert to meters
+		return vol;
 	}
 	double Ball::getVolume() {
 		return this->volume;
@@ -54,6 +55,27 @@ namespace projectlib
 		this->density = GENERIC_DRAG_COEFFICIENT;
 	}
 	double Ball::calculateFrontalArea() {
-
+		// pir^2
+		double fArea = 3.14*pow((this->diameter/2.0), 2);
+		return fArea;
+	}
+	double Ball::getFrontalArea() {
+		return this->frontalArea;
+	}
+	void Ball::setFrontalArea(double frontalArea) {
+		this->frontalArea = frontalArea;
+	}
+	double Ball::getMass() {
+		return this->mass;
+	}
+	void Ball::setMass(double mass) {
+		this->mass = mass;
+	}
+	double Ball::calculateMass() {
+		double massCalc = this->density * this->volume;
+		return massCalc;
+	}
+	void Ball::setVolume(double volume) {
+		this->volume = volume;
 	}
 }

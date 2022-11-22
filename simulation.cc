@@ -29,9 +29,26 @@ namespace projectlib
 	double Simulation::calculateDragForce() {
 		// Fd = Cd(1/2)p(v^2)A
 		double dragCoef = cannonball.getDragCoefficient();
-		double densityOfFluid = DENSITY_OF_AIR;
-		double frontalArea =
-
+		double frontalArea = cannonball.getFrontalArea();
+		double initVel = getInitialVelocity();
+		double dragForce = dragCoef*(0.5)*DENSITY_OF_AIR*(pow(initVel, 2)*frontalArea);
+		return dragForce;
+	}
+	double Simulation::calculateTerminalVelocity() {
+		// Vt = sqrt(2mg/pACd)
+		double dragCoef = cannonball.getDragCoefficient();
+		double frontalArea = cannonball.getFrontalArea();
+		double gravity = getGravity();
+		double mass = cannonball.getMass();
+		double terminalVelocity = sqrt((2*mass*gravity)/(DENSITY_OF_AIR*frontalArea*dragCoef));
+		std::cout << "dragCoef " << dragCoef << "\n";
+		std::cout << "diameter " << cannonball.getDiameter() << "\n";
+		std::cout << "volume " << cannonball.getVolume() << "\n";
+		std::cout << "density " << cannonball.getDensity() << "\n";
+		std::cout << "frontalArea " << frontalArea << "\n";
+		std::cout << "mass " << mass << "\n";
+		std::cout << "terminalVelocity " << terminalVelocity << "\n";
+		return terminalVelocity;
 	}
 
 
@@ -48,10 +65,4 @@ namespace projectlib
 	void Simulation::setInitialVelocity(double initialVelocity) {
 		this->initialVelocity = initialVelocity;
 	}
-	//double Simulation::getTime() {
-	//	return this->time;
-	//}
-	//void Simulation::setTime(double time) {
-	//	this->time = time;
-	//}
 }

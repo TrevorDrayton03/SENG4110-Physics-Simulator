@@ -32,6 +32,7 @@ namespace projectlib
 		void setType(std::string type);
 		void setDragCoefficient();
 		double getDragCoefficient();
+		void setDiameter(double diameter);
 	};
 }
 #endif 

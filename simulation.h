@@ -37,6 +37,7 @@ namespace projectlib
 		double getVerticalDistanceTravelled();
 		double getHorizontalDistanceTravelled(Cannon cannon, Cannonball cannonball);
 		double calculateDragForce();
+		double calculateTerminalVelocity();
 	};
 	
 }

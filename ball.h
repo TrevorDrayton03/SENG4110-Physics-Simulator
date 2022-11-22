@@ -31,6 +31,7 @@ namespace projectlib
 		double diameter;
 		double dragCoefficient;
 		double frontalArea;
+		double mass;
 
 	public:
 		Ball();
@@ -43,11 +44,17 @@ namespace projectlib
 		void calculateWeight(double density, double gravity);
 		std::string getType();
 		void setType();
-		void calculateVolume(double diameter);
+		double calculateVolume();
 		double getVolume();
+		void setVolume(double volume);
 		double getDragCoefficient();
 		void setDragCoefficient();
 		double calculateFrontalArea();
+		double getFrontalArea();
+		void setFrontalArea(double frontalArea);
+		double getMass();
+		void setMass(double mass);
+		double calculateMass();
 	};
 	
 }

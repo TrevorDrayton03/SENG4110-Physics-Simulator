@@ -36,4 +36,6 @@ int main(int argc, char **argv)
 	Simulation simulation = Simulation(gravityInput, heightInput, diameterInput, angleInput, velocityInput, typeInput);
 	double time = simulation.getTimeTakenToLand();
 	std::cout << "It took " << time << " seconds for the cannonball to strike the ground. \n";
+	//simulation.calculateDragForce();
+	simulation.calculateTerminalVelocity();
 };
