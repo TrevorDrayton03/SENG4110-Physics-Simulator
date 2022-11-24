@@ -30,7 +30,7 @@ namespace projectlib
 	private:
 	public:
 		Cannonball();
-		Cannonball(double gravity, double diameter, std::string type);
+		Cannonball(double gravity, std::string type);
 		void setDensity();
 		void setType(std::string type);
 		void setDragCoefficient();

@@ -10,28 +10,38 @@
 using namespace projectlib;
 int main(int argc, char **argv)
 {
-	//std::istringstream sin("9.8 iron 10 100 30 5");
-	// gravity, type, diameter, height, angle
-	std::istringstream sin("9.8 iron 10.0 1.0 30.0");
-	std::cin.rdbuf(sin.rdbuf());
+	// gravity, type, height, angle
+	//std::istringstream sin("9.8 iron 100.0 30.0 ");
+	//std::cin.rdbuf(sin.rdbuf());
 
-	double gravityInput, diameterInput, heightInput, angleInput;
+	//double gravityInput, heightInput, angleInput;
+	//std::string typeInput;
+
+	//std::cin >> gravityInput >> typeInput >> heightInput >> angleInput;
+
+	//Simulation simulation = Simulation(gravityInput, heightInput, angleInput, typeInput);
+	//double time = simulation.getTimeTakenToLand();
+	//std::cout << "It took " << time << " seconds for the " <<simulation.getType()<<" cannonball to strike the ground. \n";
+	//double gravityInput, heightInput, angleInput;
+	double gravityInput, heightInput, angleInput;
+	Simulation simulation;
 	std::string typeInput;
+	std::string testCase;
 
-	std::cout << "Welcome to the Physics Simulator. \n";
-	std::cout << "Enter the value for gravity (N/kg). \n";
-	std::cin >> gravityInput;
-	std::cout << "Enter the type of cannonball (iron, rock, or glass). \n";
-	std::cin >> typeInput;
-	std::cout << "Enter the value for the diameter of the cannonball (centimeters). \n";
-	std::cin >> diameterInput;
-	std::cout << "Enter the value for the height of the cannon (meters). \n";
-	std::cin >> heightInput;
-	std::cout << "Enter the value for the angle of the cannon. \n";
-	std::cin >> angleInput;
-	std::cout << "Running the simulation...\n";
+	std::string testCases[8] = {
+		"5.0 iron 30.0 0.0", "5.0 iron 30.0 0.0", "5.0 iron 0.0 5.0", "5.0 iron 0.0 0.0",
+		"0.0 iron 30.0 5.0", "0.0 iron 30.0 0.0", "0.0 iron 0.0 5.0", "0.0 iron 0.0 0.0"
+	};
 
-	Simulation simulation = Simulation(gravityInput, heightInput, diameterInput, angleInput, typeInput);
-	double time = simulation.getTimeTakenToLand();
-	std::cout << "It took " << time << " seconds for the " <<simulation.getType()<<" cannonball to strike the ground. \n";
+	for (int i = 0; i < 8; i++) {
+		testCase = testCases[i];
+		std::istringstream sin(testCase);
+		std::cin.rdbuf(sin.rdbuf());
+		std::cin >> gravityInput >> typeInput >> heightInput >> angleInput;
+		simulation = Simulation(gravityInput, heightInput, angleInput, typeInput);
+		double time = simulation.getTimeTakenToLand();
+		std::cout << time << "\n";
+		testCase = "";
+		//EXPECT_NEAR(time, correctResults[i], .1);
+	}
 };

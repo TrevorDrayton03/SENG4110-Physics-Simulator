@@ -11,11 +11,11 @@ namespace projectlib
 {
 	Ball::Ball() {};
 	Ball::Ball(double gravity) {
-		setDensity();
+		//setDensity();
 		setType();
 		setInitialVelocity();
-		setDragCoefficient();
-		calculateWeight(density, gravity);
+		//setDragCoefficient();
+		//calculateWeight(density, gravity);
 	}
 	double Ball::getDensity() {
 		return this->density;
@@ -46,7 +46,7 @@ namespace projectlib
 		this->type = GENERIC_TYPE;
 	}
 	double Ball::calculateVolume() {
-		double vol = (1.0/6.0)*3.14*pow((this->diameter/100.0), 3); // divide by 100 to convert to meters
+		double vol = (1.0/6.0)*3.14*pow((this->diameter/100.0), 3.0); // divide by 100 to convert to meters
 		return vol;
 	}
 	double Ball::getVolume() {
@@ -60,7 +60,7 @@ namespace projectlib
 	}
 	double Ball::calculateFrontalArea() {
 		// pir^2
-		double fArea = 3.14*pow((this->diameter/2.0), 2);
+		double fArea = 3.14*pow((this->diameter/2.0), 2.0);
 		return fArea;
 	}
 	double Ball::getFrontalArea() {

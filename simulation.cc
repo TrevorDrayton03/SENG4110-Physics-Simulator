@@ -9,27 +9,49 @@
 
 namespace projectlib
 {
-	Simulation::Simulation(double gravity, double height, double diameter, double angle, std::string type) {
-		this->cannonball = Cannonball(gravity, diameter, type);
+	Simulation::Simulation(double gravity, double height, double angle, std::string type) {
+		this->cannonball = Cannonball(gravity, type);
 		this->cannon = Cannon(height, angle);
 		setGravity(gravity);
 	}
+	Simulation::Simulation() {};
 	std::string Simulation::getType() {
 		return cannonball.getType();
 	}
 	double Simulation::getTimeTakenToLand() {
-		// t = (2*vi*(sin(angle)) + height[meters]) / gravity -> multiply by 2 cause we want the 2nd time v = 0
-		double initVel = cannonball.getInitialVelocity();
 		double angleInDegrees = cannon.getAngle() * RADIAN_TO_DEGREE_CONVERSION;
-		double sinAngle = sin(angleInDegrees);
+		double vy = sin(angleInDegrees) * cannonball.getInitialVelocity();
 		double gravity = getGravity();
 		double height = cannon.getHeight();
-		double timeToLand = (((2 * initVel) * (sinAngle) + height) / gravity);
+		double timeToLand;
+		if (gravity == MIN_GRAVITY)
+		{
+			timeToLand = 0.0;
+			return timeToLand;
+		}
+		if (height < MIN_HEIGHT || height > MAX_HEIGHT) {
+			height = NOMINAL_HEIGHT;
+		}
+		if (angleInDegrees < MIN_ANGLE || angleInDegrees > MAX_ANGLE) {
+			angleInDegrees = NOMINAL_ANGLE;
+		}
+		if (gravity < MIN_GRAVITY || gravity > MAX_GRAVITY) {
+			gravity = NOMINAL_GRAVITY;
+		}
+		if (height > MIN_HEIGHT)
+		{
+			timeToLand = (vy + sqrt((pow(vy, 2.0) + 2.0 * gravity * height))) / gravity;
+		}
+		else if (height == MIN_HEIGHT && angleInDegrees == MIN_ANGLE){
+			timeToLand = 0.0;
+		}
+		else {
+			timeToLand = (2.0*vy)/ gravity;
+		}
 		return timeToLand;
 	}
 
 	double Simulation::calculateDragForce() {
-		// Fd = Cd(1/2)p(v^2)A
 		double dragCoef = cannonball.getDragCoefficient();
 		double frontalArea = cannonball.getFrontalArea();
 		double initVel = getInitialVelocity();
@@ -39,12 +61,11 @@ namespace projectlib
 		return dragForce;
 	}
 	double Simulation::calculateTerminalVelocity() {
-		// Vt = sqrt(2mg/pACd)
 		double dragCoef = cannonball.getDragCoefficient();
 		double frontalArea = cannonball.getFrontalArea();
 		double gravity = getGravity();
 		double mass = cannonball.getMass();
-		double terminalVelocity = sqrt((2*mass*gravity)/(DENSITY_OF_AIR*frontalArea*dragCoef));
+		double terminalVelocity = sqrt((2.0*mass*gravity)/(DENSITY_OF_AIR*frontalArea*dragCoef));
 		std::cout << "dragCoef " << dragCoef << "\n";
 		std::cout << "diameter " << cannonball.getDiameter() << "\n";
 		std::cout << "volume " << cannonball.getVolume() << "\n";
@@ -55,16 +76,14 @@ namespace projectlib
 		return terminalVelocity;
 	}
 	double Simulation::calculateAvgAcceleration() {
-		// a = change V / change T
 		double time = getTimeTakenToLand();
 		double changeV = getInitialVelocity();
-		double avgAccel = -1*changeV / time;
+		double avgAccel = -1.0*changeV / time;
 		std::cout << "avgAccel " << avgAccel << "\n";
 
 		return avgAccel;
 	}
 	double Simulation::calculateXDistance() {
-		// a = change V / change T
 		double time = getTimeTakenToLand();
 		double v = getInitialVelocity();
 		double xDist = time * v;
@@ -78,7 +97,13 @@ namespace projectlib
 		return this->gravity;
 	}
 	void Simulation::setGravity(double gravity) {
-		this->gravity = gravity;
+		if (gravity >= 0.0) {
+			this->gravity = gravity;
+		}
+		else
+		{
+			this->gravity = 1.0;
+		}
 	}
 	double Simulation::getInitialVelocity() {
 		return this->initialVelocity;

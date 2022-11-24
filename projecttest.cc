@@ -11,130 +11,115 @@
 
 using namespace projectlib;
 
-const double MIN_GRAVITY = 0.0;
-const double MIN_INITIAL_VELOCITY = 0.0;
-const double MIN_ANGLE = 0.0;
-const double MIN_HEIGHT = 0.0;
+/*
+This file performs the following tests on simulation.cc:
+	 Robust Boundary Value
+	 Equivalence Class
+*/
+/*
+Equivalence Classes:
+G1: {gravity: 0 < gravity <= 100.0}
+G2: {gravity: 0}
 
-const double MIN_PLUS_GRAVITY = 1.0;
-const double MIN_PLUS_INITIAL_VELOCITY = 1.0;
-const double MIN_PLUS_ANGLE = 1.0;
-const double MIN_PLUS_HEIGHT = 1.0;
+A1: {angle: 0 < angle <= 90.0}
+A2: {angle: 0}
 
-const double MAX_GRAVITY = 0.0;
-const double MAX_INITIAL_VELOCITY = 200.0;
-const double MAX_ANGLE = 90.0;
-const double MAX_HEIGHT = 10.0;
+H1: {height: 0 < height <= 100.0}
+H2: {height: < 0}
 
-const double MAX_MINUS_GRAVITY = 0;
-const double MAX_MINUS_INITIAL_VELOCITY = 199.0;
-const double MAX_MINUS_ANGLE = 179.0;
-const double MAX_MINUS_HEIGHT = 9.0;
+Equivalence Classes of invalid values:
+G3: {gravity < 0}
+G3: {gravity > 100.0}
 
-const double NOMINAL_GRAVITY = 9.8;
-const double NOMINAL_INITIAL_VELOCITY = 125.0;
-const double NOMINAL_ANGLE = 45.0;
-const double NOMINAL_HEIGHT = 5.0;
+A3: {angle < 0}
+A4: {angle > 90.0}
 
+H3: {height < 0}
+H4: {height > 100.0}
+*/
+TEST(BoundaryValue, Robust) {
+	// include type in the boundary?
+	double gravityInput, heightInput, angleInput;
+	Simulation simulation;
+	std::string typeInput;
+	std::string testCase;
 
-TEST(BoundaryValue, Standard) {
-	EXPECT_EQ(Slice1(), 45.00);
+	double robustTestCases[19][3] = {
+		{MIN_MINUS_GRAVITY, NOMINAL_HEIGHT, NOMINAL_ANGLE},
+		{MIN_GRAVITY, NOMINAL_HEIGHT, NOMINAL_ANGLE},
+		{MIN_PLUS_GRAVITY, NOMINAL_HEIGHT, NOMINAL_ANGLE},
+		{MAX_MINUS_GRAVITY, NOMINAL_HEIGHT, NOMINAL_ANGLE},
+		{MAX_GRAVITY, NOMINAL_HEIGHT, NOMINAL_ANGLE},
+		{MAX_PLUS_GRAVITY, NOMINAL_HEIGHT, NOMINAL_ANGLE},
+		{NOMINAL_GRAVITY, MIN_MINUS_HEIGHT, NOMINAL_ANGLE},
+		{NOMINAL_GRAVITY, MIN_HEIGHT, NOMINAL_ANGLE},
+		{NOMINAL_GRAVITY, MIN_PLUS_HEIGHT, NOMINAL_ANGLE},
+		{NOMINAL_GRAVITY, MAX_MINUS_HEIGHT, NOMINAL_ANGLE},
+		{NOMINAL_GRAVITY, MAX_HEIGHT, NOMINAL_ANGLE},
+		{NOMINAL_GRAVITY, MAX_PLUS_HEIGHT, NOMINAL_ANGLE},
+		{NOMINAL_GRAVITY, NOMINAL_HEIGHT, MIN_MINUS_ANGLE},
+		{NOMINAL_GRAVITY, NOMINAL_HEIGHT, MIN_ANGLE},
+		{NOMINAL_GRAVITY, NOMINAL_HEIGHT, MIN_PLUS_ANGLE},
+		{NOMINAL_GRAVITY, NOMINAL_HEIGHT, MAX_MINUS_ANGLE},
+		{NOMINAL_GRAVITY, NOMINAL_HEIGHT, MAX_ANGLE},
+		{NOMINAL_GRAVITY, NOMINAL_HEIGHT, MAX_PLUS_ANGLE},
+		{NOMINAL_GRAVITY, NOMINAL_HEIGHT, NOMINAL_ANGLE}
+	};
+
+	double correctResults[19] = { 
+		212.095,0,212.095,2.18806,2.16663,21.6846,21.6846,21.6375,21.6469,22.5341,
+		22.5428,21.6846,0.777848,1.01015,1.31183,30.6405,30.6455,30.6413,21.6846 
+	};
+	simulation = Simulation(gravityInput, heightInput, angleInput, typeInput);
+	for (int i = 0; i < 19; i++) {
+		// loop through each robust test case and insert the values into istringstream
+		testCase = testCase + std::to_string(robustTestCases[i][0]) + " ";
+		testCase = testCase + "iron ";
+		testCase = testCase + std::to_string(robustTestCases[i][1]) + " ";
+		testCase = testCase + std::to_string(robustTestCases[i][2]);
+		std::istringstream sin(testCase);
+		std::cin.rdbuf(sin.rdbuf());
+		std::cin >> gravityInput >> typeInput >> heightInput >> angleInput;
+		simulation = Simulation(gravityInput, heightInput, angleInput, typeInput);
+		double time = simulation.getTimeTakenToLand();
+		testCase = "";
+		EXPECT_NEAR(time, correctResults[i], .1);
+	}
 }
-//TEST(Slice, Slice2) {
-//	EXPECT_EQ(Slice2(), 30.00);
-//}
-//TEST(Slice, Slice3) {
-//	EXPECT_EQ(Slice3(), 25.00);
-//}
-//TEST(Slice, Slice4) {
-//	EXPECT_EQ(Slice4(), 0);
-//}
-//TEST(Slice, Slice5) {
-//	EXPECT_EQ(Slice5(), 0);
-//}
-//TEST(Slice, Slice6) {
-//	EXPECT_EQ(Slice6(), 0);
-//}
-//TEST(Slice, Slice7) {
-//	std::istringstream sin("10");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice7(), 10);
-//}
-//TEST(Slice, Slice8) {
-//	std::istringstream sin("-1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice8(NULL, NULL), -1);
-//}
-//TEST(Slice, Slice9) {
-//	std::istringstream sin("10 2 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice9(), 2);
-//}
-//TEST(Slice, Slice10) {
-//	std::istringstream sin("10 3 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice10(), 3);
-//}
-//TEST(Slice, Slice11) {
-//	std::istringstream sin("10 12 13 14 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice11(), 14);
-//}
-//TEST(Slice, Slice12) {
-//	std::istringstream sin("10 12 13 14 -1 10 12 13 14 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice12(), 49.00);
-//}
-//TEST(Slice, Slice13) {
-//	std::istringstream sin("10 2 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice13(), 2);
-//}
-//TEST(Slice, Slice14) {
-//	std::istringstream sin("10 2 10 2 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice14(), 4);
-//}
-//TEST(Slice, Slice15) {
-//	std::istringstream sin("10 2 10 2 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice15(), 2);
-//}
-//TEST(Slice, Slice16) {
-//	std::istringstream sin("10 2 10 2 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice16(), 4);
-//}
-//TEST(Slice, Slice17) {
-//	std::istringstream sin("10 12 13 14 -1 10 12 13 14 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	ASSERT_STREQ(Slice17().c_str(), "Locks sold: 49");
-//}
-//TEST(Slice, Slice18) {
-//	std::istringstream sin("10 2 10 2 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	ASSERT_STREQ(Slice18().c_str(), "Stocks sold: 4");
-//}
-//TEST(Slice, Slice19) {
-//	std::istringstream sin("10 2 10 2 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	ASSERT_STREQ(Slice19().c_str(), "Barrels sold: 4");
-//}
-//
-//TEST(Slice, Slice20) {
-//	EXPECT_EQ(Slice20(), 45.00);
-//}
-//TEST(Slice, Slice21) {
-//	std::istringstream sin("10 12 13 14 -1 10 12 13 14 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice21(), 49.00);
-//}
-//TEST(Slice, Slice22) {
-//	std::istringstream sin("10 12 13 14 -1 10 12 13 14 -1");
-//	std::cin.rdbuf(sin.rdbuf());
-//	EXPECT_EQ(Slice22(), 2205.00);
-}
+/**
+* 
+* 
+* Strong Normal because there is a situation where when angle and height are 0 then we get an output of 0.
+* 
+* 
+*/
+TEST(Equivalence, StrongNormal) {
+	// 8 cases, 2*2*2
+	double gravityInput, heightInput, angleInput;
+	Simulation simulation;
+	std::string typeInput;
+	std::string testCase;
 
+	std::string testCases[8] = {
+		"5.0 iron 30.0 0.0", "5.0 iron 30.0 0.0", "5.0 iron 0.0 5.0", "5.0 iron 0.0 0.0",
+		"0.0 iron 30.0 5.0", "0.0 iron 30.0 0.0", "0.0 iron 0.0 5.0", "0.0 iron 0.0 0.0"
+	};
+
+	double correctResults[8] = {
+		3.4641,3.4641,5.2267,0,0,0,0,0
+	};
+
+	for (int i = 0; i < 8; i++) {
+		testCase = testCases[i];
+		std::istringstream sin(testCase);
+		std::cin.rdbuf(sin.rdbuf());
+		std::cin >> gravityInput >> typeInput >> heightInput >> angleInput;
+		simulation = Simulation(gravityInput, heightInput, angleInput, typeInput);
+		double time = simulation.getTimeTakenToLand();
+		testCase = "";
+		EXPECT_NEAR(time, correctResults[i], .1);
+	}
+}
 
 int main(int argc, char** argv) {
 	::testing::InitGoogleTest(&argc, argv);

@@ -75,14 +75,13 @@ namespace projectlib
 		this->diameter = diameter;
 	}
 	Cannonball::Cannonball() {};
-	Cannonball::Cannonball(double gravity, double diameter, std::string type) {
+	Cannonball::Cannonball(double gravity, std::string type) {
 		setType(type);
-		setDiameter(diameter);
 		setInitialVelocity();
-		setDensity();
-		setDragCoefficient();
-		setVolume(calculateVolume());
-		setMass(calculateMass());
-		setFrontalArea(calculateFrontalArea());
+		//setDensity();
+		//setDragCoefficient();
+		//setVolume(calculateVolume());
+		//setMass(calculateMass());
+		//setFrontalArea(calculateFrontalArea());
 	}
 }
