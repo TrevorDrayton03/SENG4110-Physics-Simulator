@@ -24,7 +24,7 @@ namespace projectlib
 		double gravity = getGravity();
 		double height = cannon.getHeight();
 		double timeToLand;
-		if (gravity == MIN_GRAVITY)
+		if (gravity == MIN_GRAVITY || (height == MIN_HEIGHT && angleInDegrees == MIN_ANGLE))
 		{
 			timeToLand = 0.0;
 			return timeToLand;
@@ -42,56 +42,11 @@ namespace projectlib
 		{
 			timeToLand = (vy + sqrt((pow(vy, 2.0) + 2.0 * gravity * height))) / gravity;
 		}
-		else if (height == MIN_HEIGHT && angleInDegrees == MIN_ANGLE){
-			timeToLand = 0.0;
-		}
 		else {
 			timeToLand = (2.0*vy)/ gravity;
 		}
 		return timeToLand;
 	}
-
-	double Simulation::calculateDragForce() {
-		double dragCoef = cannonball.getDragCoefficient();
-		double frontalArea = cannonball.getFrontalArea();
-		double initVel = getInitialVelocity();
-		double dragForce = dragCoef*(0.5)*DENSITY_OF_AIR*(pow(initVel, 2)*frontalArea);
-		std::cout << "dragForce " << dragForce << "\n";
-
-		return dragForce;
-	}
-	double Simulation::calculateTerminalVelocity() {
-		double dragCoef = cannonball.getDragCoefficient();
-		double frontalArea = cannonball.getFrontalArea();
-		double gravity = getGravity();
-		double mass = cannonball.getMass();
-		double terminalVelocity = sqrt((2.0*mass*gravity)/(DENSITY_OF_AIR*frontalArea*dragCoef));
-		std::cout << "dragCoef " << dragCoef << "\n";
-		std::cout << "diameter " << cannonball.getDiameter() << "\n";
-		std::cout << "volume " << cannonball.getVolume() << "\n";
-		std::cout << "density " << cannonball.getDensity() << "\n";
-		std::cout << "frontalArea " << frontalArea << "\n";
-		std::cout << "mass " << mass << "\n";
-		std::cout << "terminalVelocity " << terminalVelocity << "\n";
-		return terminalVelocity;
-	}
-	double Simulation::calculateAvgAcceleration() {
-		double time = getTimeTakenToLand();
-		double changeV = getInitialVelocity();
-		double avgAccel = -1.0*changeV / time;
-		std::cout << "avgAccel " << avgAccel << "\n";
-
-		return avgAccel;
-	}
-	double Simulation::calculateXDistance() {
-		double time = getTimeTakenToLand();
-		double v = getInitialVelocity();
-		double xDist = time * v;
-		std::cout << "xDist " << xDist << "\n";
-		return xDist;
-	}
-
-
 
 	double Simulation::getGravity() {
 		return this->gravity;
@@ -104,11 +59,5 @@ namespace projectlib
 		{
 			this->gravity = 1.0;
 		}
-	}
-	double Simulation::getInitialVelocity() {
-		return this->initialVelocity;
-	}
-	void Simulation::setInitialVelocity(double initialVelocity) {
-		this->initialVelocity = initialVelocity;
 	}
 }

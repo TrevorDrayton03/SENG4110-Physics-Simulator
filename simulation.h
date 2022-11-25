@@ -15,6 +15,7 @@
 #include "cannon.h"
 #include "cannonball.h"
 #include <cmath>
+
 const double RADIAN_TO_DEGREE_CONVERSION = (3.14 / 180.0);
 const double MIN_MINUS_GRAVITY = -1.0;
 const double MIN_MINUS_ANGLE = -1.0;
@@ -50,25 +51,13 @@ namespace projectlib
 		Cannonball cannonball;
 		Cannon cannon;
 		double gravity;
-		double initialVelocity;
-		double time;
 	public:
 		Simulation(double gravity, double height, double angle, std::string type);
 		Simulation();
 		double getGravity();
 		void setGravity(double gravity);
-		double getInitialVelocity();
-		void setInitialVelocity(double initialVelocity);
-		double getTime();
 		std::string getType();
-		void setTime(double time);
 		double getTimeTakenToLand();
-		double getVerticalDistanceTravelled();
-		double getHorizontalDistanceTravelled(Cannon cannon, Cannonball cannonball);
-		double calculateDragForce();
-		double calculateTerminalVelocity();
-		double calculateAvgAcceleration();
-		double calculateXDistance();
 	};
 	
 }

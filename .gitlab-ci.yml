@@ -14,7 +14,7 @@ build-job:
     - cd build
     - cmake ..
     - make
-    - ./project
+    - ./project 9.8 iron 30.0 0.0
 
 unit-test-job:
   stage: test

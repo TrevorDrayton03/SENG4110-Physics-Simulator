@@ -153,15 +153,67 @@ TEST(DecisionTable, Reduced) {
 	std::string typeInput;
 	std::string testCase;
 
-	std::string testCases[8] = {
+	std::string testCases[3] = {
 		"5.0 iron 30.0 5.0", "5.0 iron 0.0 0.0", "0.0 iron 30.0 5.0",
 	};
 
-	double correctResults[8] = {
+	double correctResults[3] = {
 		6.95266,0,0
 	};
 
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 3; i++) {
+		testCase = testCases[i];
+		std::istringstream sin(testCase);
+		std::cin.rdbuf(sin.rdbuf());
+		std::cin >> gravityInput >> typeInput >> heightInput >> angleInput;
+		simulation = Simulation(gravityInput, heightInput, angleInput, typeInput);
+		double time = simulation.getTimeTakenToLand();
+		testCase = "";
+		EXPECT_NEAR(time, correctResults[i], .1);
+	}
+}
+
+/**
+*	PATHS
+*	incorrect number of args
+*
+*	args correct -> valid type -> rock -> grav is zero || height & angle both are zero -> end
+*	args correct -> valid type -> glass -> grav is zero || height & angle both are zero -> end
+*	args correct -> invalid type -> iron -> grav is zero || height & angle both are zero -> end
+*	args correct -> valid type -> iron -> grav is zero || height & angle both are zero -> end	
+* 
+*	args correct -> valid type -> rock -> has height -> end
+*	args correct -> valid type -> glass -> has height -> end
+*	args correct -> invalid type -> iron -> has height -> end
+*	args correct -> valid type -> iron -> has height -> end
+* 
+*	args correct -> valid type -> rock -> has no height -> end
+*	args correct -> valid type -> glass -> has no height -> end
+*	args correct -> invalid type -> iron -> has no height -> end
+*	args correct -> valid type -> iron -> has no height -> end
+* 
+*	Test coverage includes Gnode, Gedge, Gchain and Gpath
+*/
+
+TEST(PathTesting, Reduced) {
+	double gravityInput, heightInput, angleInput;
+	Simulation simulation;
+	std::string typeInput;
+	std::string testCase;
+
+	std::string testCases[19] = {
+		"9.8 rock",
+		"0 rock 30.0 5.0", "9.8 glass 0 0", "0 book 30.0 5.0", "9.8 iron 0.0 0.0",
+		"9.8 rock 30.0 5.0", "9.8 glass 0 10.0", "14.9 book 30.0 5.0", "9.8 iron 0.0 10.0",
+		"0 rock 30.0 0.0", "9.8 glass 45.0 0", "0 book 30.0 0.0", "9.8 iron 60.0 0.0"
+	};
+
+	double correctResults[19] = {
+		0,0,0,0,0,3.51907,4.25047,2.67477,5.31309,0,3.03046,0,3.49927,3.49927,
+		3.49927,3.49927,3.49927,3.49927,3.49927
+	};
+
+	for (int i = 0; i < 19; i++) {
 		testCase = testCases[i];
 		std::istringstream sin(testCase);
 		std::cin.rdbuf(sin.rdbuf());
