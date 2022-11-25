@@ -225,6 +225,72 @@ TEST(PathTesting, Reduced) {
 	}
 }
 
+/**
+*
+* Dataflow
+* All-Defs, All-Uses All-P-Uses
+* Each possible definition and use combination is tested for in the PathTesting
+*
+*/
+
+TEST(Slice, Slice22) {
+	Simulation simulation = simulation.Pre_Slice();
+	EXPECT_NEAR(simulation.Slice22(simulation), 0.52, .1); // angle in degrees
+}
+TEST(Slice, Slice23) {
+	Simulation simulation = simulation.Pre_Slice();
+	EXPECT_NEAR(simulation.Slice23(simulation), 75, .1); // sin(30) * initial velocity of iron
+}
+TEST(Slice, Slice24) {
+	Simulation simulation = simulation.Pre_Slice();
+	EXPECT_EQ(simulation.Slice24(simulation), 9.8);
+}
+TEST(Slice, Slice25) {
+	Simulation simulation = simulation.Pre_Slice();
+	EXPECT_EQ(simulation.Slice25(simulation), 0);
+}
+TEST(Slice, Slice26) {
+	Simulation simulation = simulation.Pre_Slice();
+	EXPECT_EQ(simulation.Slice26(), 0);
+}
+TEST(Slice, Slice27) {
+	Simulation simulation = simulation.Pre_Slice();
+	double gravity = 0;
+	double height = 1.0;
+	double angleInDegrees = 30.0;
+	EXPECT_EQ(simulation.Slice27(gravity, height, angleInDegrees), 0);
+}
+TEST(Slice, Slice32) {
+	Simulation simulation = simulation.Pre_Slice();
+	double height = -1.0;
+	EXPECT_EQ(simulation.Slice32(height), 5.0);
+}
+TEST(Slice, Slice35) {
+	Simulation simulation = simulation.Pre_Slice();
+	double angle = 145.0;
+	EXPECT_EQ(simulation.Slice35(angle), 45.0);
+}
+TEST(Slice, Slice38) {
+	Simulation simulation = simulation.Pre_Slice();
+	double gravity = -5.0;
+	EXPECT_EQ(simulation.Slice38(gravity), 9.8);
+}
+TEST(Slice, Slice41) {
+	Simulation simulation = simulation.Pre_Slice();
+	double height = 10.0;
+	double vy = simulation.Slice23(simulation);
+	double gravity = simulation.Slice24(simulation);
+	EXPECT_NEAR(simulation.Slice41(height, gravity, vy), 15.4, .1); 
+}
+TEST(Slice, Slice45) {
+	Simulation simulation = simulation.Pre_Slice();
+	double vy = simulation.Slice23(simulation);
+	double gravity = simulation.Slice24(simulation);
+	EXPECT_NEAR(simulation.Slice45(vy, gravity), 15.2, .1); 
+}
+
+
+
 int main(int argc, char** argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

@@ -58,6 +58,18 @@ namespace projectlib
 		void setGravity(double gravity);
 		std::string getType();
 		double getTimeTakenToLand();
+		Simulation Pre_Slice();
+		double Slice22(Simulation simulation);
+		double Slice23(Simulation simulation);
+		double Slice24(Simulation simulation);
+		double Slice25(Simulation simulation);
+		double Slice26();
+		double Slice27(double gravity, double height, double angleInDegrees);
+		double Slice32(double height);
+		double Slice35(double angleInDegrees);
+		double Slice38(double gravity);
+		double Slice41(double height, double gravity, double vy);
+		double Slice45(double vy, double gravity);
 	};
 	
 }
