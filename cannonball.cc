@@ -7,6 +7,9 @@
 
 #include "cannonball.h"
 
+/**
+* @namespace projectlib
+*/
 namespace projectlib
 {
 	void Cannonball::setInitialVelocity() {

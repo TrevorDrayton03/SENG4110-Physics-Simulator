@@ -16,7 +16,7 @@
 #include "cannonball.h"
 #include <cmath>
 
-const double RADIAN_TO_DEGREE_CONVERSION = (3.14 / 180.0);
+const double DEGREE_TO_RADIAN_CONVERSION = (3.14 / 180.0);
 const double MIN_MINUS_GRAVITY = -1.0;
 const double MIN_MINUS_ANGLE = -1.0;
 const double MIN_MINUS_HEIGHT = -1.0;
@@ -44,6 +44,10 @@ const double MAX_PLUS_HEIGHT = 101.0;
 const double NOMINAL_GRAVITY = 9.8;
 const double NOMINAL_ANGLE = 45.0;
 const double NOMINAL_HEIGHT = 5.0;
+
+/**
+* @namespace projectlib
+*/
 namespace projectlib
 {
 	class Simulation {

@@ -7,6 +7,9 @@
 
 #include "cannon.h"
 
+/**
+* @namespace projectlib
+*/
 namespace projectlib
 {
 	Cannon::Cannon() {};

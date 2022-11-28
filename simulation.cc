@@ -7,6 +7,9 @@
 
 #include "simulation.h"
 
+/**
+* @namespace projectlib
+*/
 namespace projectlib
 {
 	Simulation::Simulation(double gravity, double height, double angle, std::string type) {
@@ -19,7 +22,7 @@ namespace projectlib
 		return cannonball.getType();
 	}
 	double Simulation::getTimeTakenToLand() {
-		double angleInDegrees = cannon.getAngle() * RADIAN_TO_DEGREE_CONVERSION;
+		double angleInDegrees = cannon.getAngle() * DEGREE_TO_RADIAN_CONVERSION;
 		double vy = sin(angleInDegrees) * cannonball.getInitialVelocity();
 		double gravity = getGravity();
 		double height = cannon.getHeight();
@@ -69,7 +72,7 @@ namespace projectlib
 		return simulation;
 	}
 	double Simulation::Slice22(Simulation simulation) {
-		double angleInDegrees = simulation.cannon.getAngle() * RADIAN_TO_DEGREE_CONVERSION;
+		double angleInDegrees = simulation.cannon.getAngle() * DEGREE_TO_RADIAN_CONVERSION;
 		return angleInDegrees;
 	}
 	double Simulation::Slice23(Simulation simulation) {

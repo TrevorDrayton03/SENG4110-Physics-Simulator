@@ -18,6 +18,9 @@ const double ROCK_INITIAL_VELOCITY = 100.0;
 const double GLASS_INITIAL_VELOCITY = 120.0;
 const double IRON_INITIAL_VELOCITY = 150.0;
 
+/**
+* @namespace projectlib
+*/
 namespace projectlib
 {
 	class Ball {

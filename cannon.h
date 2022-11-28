@@ -13,6 +13,9 @@
 #include <sstream>
 #include <string>
 
+/**
+* @namespace projectlib
+*/
 namespace projectlib
 {
 	class Cannon {

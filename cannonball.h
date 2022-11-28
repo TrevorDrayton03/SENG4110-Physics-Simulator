@@ -14,6 +14,9 @@
 #include <string>
 #include "ball.h"
 
+/**
+* @namespace projectlib
+*/
 namespace projectlib
 {
 	class Cannonball: public Ball {

@@ -7,6 +7,9 @@
 
 #include "ball.h"
 
+/**
+* @namespace projectlib
+*/
 namespace projectlib
 {
 	Ball::Ball() {};
