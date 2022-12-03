@@ -1,7 +1,7 @@
 /**
-* @brief 
+* @brief Unit, Integration, and System Level Testing
 * @author Trevor Drayton
-* @date 
+* @date 02/12/2022
 * @version 1.0
 */
 #include "simulation.h"
@@ -19,7 +19,7 @@ H2: {height: < 0}
 
 Equivalence Classes of invalid values:
 G3: {gravity < 0}
-G3: {gravity > 100.0}
+G4: {gravity > 100.0}
 
 A3: {angle < 0}
 A4: {angle > 90.0}
@@ -29,7 +29,7 @@ H4: {height > 100.0}
 */
 /**
 *	PATHS
-*	incorrect number of args
+*	incorrect number of args -> end
 *
 *	args correct -> valid type -> rock -> grav is zero || height & angle both are zero -> end
 *	args correct -> valid type -> glass -> grav is zero || height & angle both are zero -> end
@@ -48,18 +48,15 @@ H4: {height > 100.0}
 *
 *	Test coverage includes Gnode, Gedge, Gchain and Gpath
 */
-/**
-*
-* Dataflow
-* All-Defs, All-Uses All-P-Uses
-* Each possible definition and use combination is tested for in the PathTesting
-*
-*/
+
 using namespace projectlib;
 /**
-* Unit test function for Simulation::getTimeTakenToLand()
-* @see Simulation::getTimeTakenToLand()
-*
+* @brief Unit test function for Simulation::getTimeTakenToLand()
+* @param gravityInput The gravity value in the simulation.
+* @param heightInput The height value of the cannon above the ground in meters.
+* @param angleInDegreesInput The angle value of the cannon above the ground in degrees.
+* @param vyInput The velocity of the cannonball in the Y direction only.
+* @return Time taken for the cannonball to land.
 */
 double getTimeTakenToLand(double angleInDegreesInput, double vyInput, double gravityInput, double heightInput) {
 	double angleInDegrees = angleInDegreesInput;
@@ -90,11 +87,12 @@ double getTimeTakenToLand(double angleInDegreesInput, double vyInput, double gra
 	}
 	return timeToLand;
 }
-
 /**
-* Integration test function for Simulation::getTimeTakenToLand().
-* @see Simulation::getTimeTakenToLand()
-*
+* @brief Integration test function for Simulation::getTimeTakenToLand()
+* @param cannonball The cannonball object used to get the initial velocity.
+* @param cannon The cannon object used to get the height and angle.
+* @param gravityInput The gravity value in the simulation.
+* @return Time taken for the cannonball to land.
 */
 double getTimeTakenToLand(Cannonball cannonball, Cannon cannon, double gravityInput) {
 	double angleInDegrees = cannon.getAngle() * DEGREE_TO_RADIAN_CONVERSION;
@@ -172,16 +170,16 @@ TEST(UnitTesting, RobustBoundaryValueUnitTest) {
 	}
 }
 
-TEST(UnitTesting, StrongNormalEquivalenceUnitTest) {
+TEST(UnitTesting, NormalEquivalenceUnitTest) {
 	double gravityInput, heightInput, angleInput;
 
 	double testCases[8][3] = {
-		{5.0, 30.0, 0.0}, {5.0, 30.0, 0.0}, {5.0, 0.0, 5.0}, {5.0, 0.0, 0.0},
+		{5.0, 30.0, 5.0}, {5.0, 30.0, 0.0}, {5.0, 0.0, 5.0}, {5.0, 0.0, 0.0},
 		{0.0, 30.0, 5.0}, {0.0, 30.0, 0.0}, {0.0, 0.0, 5.0}, {0.0, 0.0, 0.0}
 	};
 
 	double correctResults[8] = {
-		3.4641,3.4641,5.2267,0,0,0,0,0
+		6.95266,3.4641,5.2267,0,0,0,0,0
 	};
 
 	for (int i = 0; i < 8; i++) {
@@ -193,12 +191,7 @@ TEST(UnitTesting, StrongNormalEquivalenceUnitTest) {
 		EXPECT_NEAR(time, correctResults[i], .1);
 	}
 }
-/**
-* 
-* In this case, the Limited Decision Table is identical to the Strong Normal Equivalence Unit Test.
-* This test is the Reduced Decision Table test.
-* 
-*/
+
 TEST(UnitTesting, ReducedDecisionTableUnitTest) {
 	double gravityInput, heightInput, angleInput;
 
@@ -258,8 +251,16 @@ TEST(UnitTesting, PathTest) {
 	}
 }
 /**
-* Admittedly, the following slice test suite is a system test, not unit tests as they should be.
+*
+* Dataflow Testing
+* Does the program satisfy the following criterion?
+* All-Defs : YES
+* All-Uses : NO
+* All-P-Uses/Some C-Uses : NO
+* All-C-Uses/Some P-Uses : YES
+*
 */
+
 TEST(UnitTesting, Slice22) {
 	Simulation simulation = simulation.Pre_Slice();
 	EXPECT_NEAR(simulation.Slice22(simulation), 0.52, .1);
@@ -320,8 +321,50 @@ TEST(UnitTesting, Slice45) {
 *
 *
 *
+* INTEGRATION TESTS
+*
+* 
+*
+*/
+
+/**
+* MM Path Integration Testing
+*/
+TEST(IntegrationTesting, MMPathTesting) {
+	double gravityInput, heightInput, angleInput;
+	std::string typeInput;
+	std::string testCase;
+	Cannonball cannonBall;
+	Cannon cannon;
+	std::string testCases[12] = {
+		"0 rock 30.0 5.0", "9.8 glass 0 0", "0 book 30.0 5.0", "9.8 iron 0.0 0.0",
+		"9.8 rock 30.0 5.0", "9.8 glass 0 10.0", "14.9 book 30.0 5.0", "9.8 iron 0.0 10.0",
+		"0 rock 30.0 0.0", "9.8 glass 45.0 0", "0 book 30.0 0.0", "9.8 iron 60.0 0.0"
+	};
+	double correctResults[12] = {
+	0,0,0,0,3.51907,4.25047,2.67477,5.31309,0,3.03046,0,3.49927
+	};
+
+	for (int i = 0; i < 12; i++) {
+		testCase = testCases[i];
+		std::istringstream sin(testCase);
+		std::cin.rdbuf(sin.rdbuf());
+		std::cin >> gravityInput >> typeInput >> heightInput >> angleInput;
+		cannon = Cannon(heightInput, angleInput);
+		cannonBall = Cannonball(typeInput);
+	 	double time = getTimeTakenToLand(cannonBall, cannon, gravityInput);
+		testCase = "";
+		EXPECT_NEAR(time, correctResults[i], .1);
+	}
+}
+
+/**
+*
+*
+*
 * SYSTEM TESTS
 *
+* 
 *
 */
 TEST(SystemTesting, RobustBoundaryValueSystemTest) {
@@ -374,9 +417,9 @@ TEST(SystemTesting, RobustBoundaryValueSystemTest) {
 }
 
 /** 
-* Strong Normal because there is a situation where when angle and height are 0 then we get an output of 0.
+* Normal because there is a situation where when angle and height are 0 then we get an output of 0.
 */
-TEST(SystemTesting, StrongNormalEquivalenceSystemTest) {
+TEST(SystemTesting, NormalEquivalenceSystemTest) {
 	// 8 cases, 2*2*2
 	double gravityInput, heightInput, angleInput;
 	Simulation simulation;
@@ -384,12 +427,12 @@ TEST(SystemTesting, StrongNormalEquivalenceSystemTest) {
 	std::string testCase;
 
 	std::string testCases[8] = {
-		"5.0 iron 30.0 0.0", "5.0 iron 30.0 0.0", "5.0 iron 0.0 5.0", "5.0 iron 0.0 0.0",
+		"5.0 iron 30.0 5.0", "5.0 iron 30.0 0.0", "5.0 iron 0.0 5.0", "5.0 iron 0.0 0.0",
 		"0.0 iron 30.0 5.0", "0.0 iron 30.0 0.0", "0.0 iron 0.0 5.0", "0.0 iron 0.0 0.0"
 	};
 
 	double correctResults[8] = {
-		3.4641,3.4641,5.2267,0,0,0,0,0
+		6.95,3.4641,5.2267,0,0,0,0,0
 	};
 
 	for (int i = 0; i < 8; i++) {
@@ -429,26 +472,32 @@ TEST(SystemTesting, ReducedDecisionTableSystemTest) {
 		EXPECT_NEAR(time, correctResults[i], .1);
 	}
 }
-
+/**
+*
+* MM Path System Testing
+* High Level Use Cases
+* These use cases are based on all paths of MMPathTesting on a system level.
+* When I refer to "nominal" values here, I am talking about within a valid range, not necessarily
+* the constant nominal values defined in the code.
+* 
+*/
 TEST(SystemTesting, MMPathTesting) {
 	double gravityInput, heightInput, angleInput;
 	Simulation simulation;
 	std::string typeInput;
 	std::string testCase;
 
-	std::string testCases[19] = {
+	std::string testCases[13] = {
 		"9.8 rock",
 		"0 rock 30.0 5.0", "9.8 glass 0 0", "0 book 30.0 5.0", "9.8 iron 0.0 0.0",
 		"9.8 rock 30.0 5.0", "9.8 glass 0 10.0", "14.9 book 30.0 5.0", "9.8 iron 0.0 10.0",
 		"0 rock 30.0 0.0", "9.8 glass 45.0 0", "0 book 30.0 0.0", "9.8 iron 60.0 0.0"
 	};
-
-	double correctResults[19] = {
-		0,0,0,0,0,3.51907,4.25047,2.67477,5.31309,0,3.03046,0,3.49927,3.49927,
-		3.49927,3.49927,3.49927,3.49927,3.49927
+	double correctResults[13] = {
+	0,0,0,0,0,3.51907,4.25047,2.67477,5.31309,0,3.03046,0,3.49927
 	};
 
-	for (int i = 0; i < 19; i++) {
+	for (int i = 0; i < 13; i++) {
 		testCase = testCases[i];
 		std::istringstream sin(testCase);
 		std::cin.rdbuf(sin.rdbuf());

@@ -1,7 +1,7 @@
 /**
-* @brief 
+* @brief Main function of the simple physics simulator. Gets the time taken for a cannonball to land.
 * @author Trevor Drayton
-* @date 
+* @date 02/12/2022
 * @version 1.0
 */
 

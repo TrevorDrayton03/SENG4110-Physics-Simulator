@@ -1,15 +1,12 @@
 /**
-* @brief 
+* @brief Cannonball class declaration file. 
 * @author Trevor Drayton
-* @date 
+* @date 02/12/2022
 * @version 1.0
 */
 
 #include "cannonball.h"
 
-/**
-* @namespace projectlib
-*/
 namespace projectlib
 {
 	void Cannonball::setInitialVelocity() {
@@ -38,7 +35,7 @@ namespace projectlib
 		return this->initialVelocity;
 	}
 	Cannonball::Cannonball() {};
-	Cannonball::Cannonball(double gravity, std::string type) {
+	Cannonball::Cannonball(std::string type) {
 		setType(type);
 		setInitialVelocity();
 	}

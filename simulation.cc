@@ -1,19 +1,16 @@
 /**
-* @brief 
+* @brief Simulation class declaration file.
 * @author Trevor Drayton
-* @date 
+* @date 02/12/2022
 * @version 1.0
 */
 
 #include "simulation.h"
 
-/**
-* @namespace projectlib
-*/
 namespace projectlib
 {
 	Simulation::Simulation(double gravity, double height, double angle, std::string type) {
-		this->cannonball = Cannonball(gravity, type);
+		this->cannonball = Cannonball(type);
 		this->cannon = Cannon(height, angle);
 		setGravity(gravity);
 	}

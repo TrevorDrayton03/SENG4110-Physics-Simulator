@@ -1,24 +1,20 @@
 /**
-* @brief 
+* @brief Ball class declaration file.
 * @author Trevor Drayton
-* @date 
+* @date 02/12/2022
 * @version 1.0
 */
 
 #include "ball.h"
 
-/**
-* @namespace projectlib
-*/
 namespace projectlib
 {
-	Ball::Ball() {};
-	Ball::Ball(double gravity) {
+	Ball::Ball() {
 		setType();
 		setInitialVelocity();
 	}
 	void Ball::setInitialVelocity() {
-		this->density = IRON_INITIAL_VELOCITY;
+		this->initialVelocity = IRON_INITIAL_VELOCITY;
 	}
 	std::string Ball::getType() {
 		return this->type;

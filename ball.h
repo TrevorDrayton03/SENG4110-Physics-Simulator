@@ -1,7 +1,7 @@
 /**
-* @brief
+* @brief Ball class definition file.
 * @author Trevor Drayton
-* @date
+* @date 02/12/2022
 * @version 1.0
 */
 
@@ -14,32 +14,52 @@
 #include <string>
 #include <cmath>
 
+/**
+* Constants within the ball's context are defined here.
+*/
 const double ROCK_INITIAL_VELOCITY = 100.0;
 const double GLASS_INITIAL_VELOCITY = 120.0;
 const double IRON_INITIAL_VELOCITY = 150.0;
 
 /**
-* @namespace projectlib
+* @brief Project library namespace.
 */
 namespace projectlib
 {
+	/**
+	* @brief Ball class inherited by Cannonball.
+	* @see Cannonball::Cannonball(std::string type)
+	*/
 	class Ball {
 	protected: 
-		double density;
-		double weight;
+		/**
+		* Type of ball (rock, iron, glass).
+		*/
 		std::string type;
-		double volume;
-		double diameter;
-		double dragCoefficient;
-		double frontalArea;
-		double mass;
+		/**
+		* Initial velocity of ball based on type.
+		*/
 		double initialVelocity;
 
 	public:
+		/**
+		* Create a new Ball object.
+		* @brief Default constructor.
+		*/
 		Ball();
-		Ball(double gravity);
+		/**
+		* @brief Get the type of the ball.
+		* @return Type of ball (rock, iron, glass).
+		*/
 		std::string getType();
+		/**
+		* @brief Set the type of the ball to type "iron".
+		*/
 		void setType();
+		/**
+		* @brief Set the initial velocity to IRON_INITIAL_VELOCITY.
+		* @see IRON_INITIAL_VELOCITY
+		*/
 		void setInitialVelocity();
 	};
 	
