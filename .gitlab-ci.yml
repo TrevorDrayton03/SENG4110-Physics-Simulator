@@ -40,6 +40,8 @@ docs-job:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: always
   script: 
+    - echo " Generating docs ..."
+    - mkdir docs
     - cd docs
     - doxygen /builds/trevordrayton/Project/docs/Doxyfile
     - doxygen
