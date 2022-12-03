@@ -1,0 +1,4 @@
+<map id="projectlib::Cannonball" name="projectlib::Cannonball">
+<area shape="rect" id="node1" title="Cannonball class used to determine the initial velocity of the simulation, determined by the type...." alt="" coords="5,80,169,107"/>
+<area shape="rect" id="node2" href="$classprojectlib_1_1Ball.html" title="Ball class inherited by Cannonball." alt="" coords="29,5,145,32"/>
+</map>

@@ -41,7 +41,6 @@ docs-job:
       when: always
   script: 
     - echo " Generating docs ..."
-    - mkdir docs
     - cd docs
     - doxygen /builds/trevordrayton/Project/docs/Doxyfile
     - doxygen

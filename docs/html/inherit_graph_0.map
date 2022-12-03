@@ -1,0 +1,4 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classprojectlib_1_1Ball.html" title="Ball class inherited by Cannonball." alt="" coords="5,5,121,32"/>
+<area shape="rect" id="node2" href="$classprojectlib_1_1Cannonball.html" title="Cannonball class used to determine the initial velocity of the simulation, determined by the type...." alt="" coords="169,5,333,32"/>
+</map>
