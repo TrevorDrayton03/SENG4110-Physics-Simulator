@@ -42,7 +42,7 @@ docs-job:
   script: 
     - echo " Generating docs ..."
     - cd docs
-    - doxygen /builds/trevordrayton/Project/docs/Doxyfile
+    - doxygen ./Doxyfile
     - doxygen
     - source /usr/bin/make-json.bash token=$API_TOKEN project=$CI_PROJECT_ID job=$CI_JOB_ID name=$CI_PROJECT_NAME secret=$WEBHOOK_SECRET slug=$CI_PROJECT_PATH_SLUG > out.json
   artifacts:
