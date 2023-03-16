@@ -5,7 +5,7 @@
 
 ## About 
 
-This project is a simple phsyics simulator that simulates a cannon shooting a ball across an empty field.
+This project is a simple physics simulator that simulates a cannon shooting a ball across an empty field.
 
 This simulator determines the amount of time it takes for a cannonball to land after being shot from a cannon.
 
