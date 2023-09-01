@@ -1,5 +1,5 @@
 ### lab9 image has our dependencies
-image: registry.seng4110.tru.ca/trevordrayton/docker/seng4110:lab9
+image: registry.gitlab.com/trevordrayton03/seng-4110-physics-simulator/phys_sim:latest
 
 stages:
   - build
@@ -44,9 +44,8 @@ docs-job:
     - cd docs
     - doxygen ./Doxyfile
     - doxygen
-    - source /usr/bin/make-json.bash token=$API_TOKEN project=$CI_PROJECT_ID job=$CI_JOB_ID name=$CI_PROJECT_NAME secret=$WEBHOOK_SECRET slug=$CI_PROJECT_PATH_SLUG > out.json
+    #- source /usr/bin/make-json.bash token=$API_TOKEN project=$CI_PROJECT_ID job=$CI_JOB_ID name=$CI_PROJECT_NAME secret=$WEBHOOK_SECRET slug=$CI_PROJECT_PATH_SLUG > out.json
   artifacts:
     paths:
       - docs/
     expire_in: 30min
-    
