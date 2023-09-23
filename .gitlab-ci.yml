@@ -48,4 +48,4 @@ docs-job:
   artifacts:
     paths:
       - docs/
-    expire_in: 30min
+    expire_in: never
