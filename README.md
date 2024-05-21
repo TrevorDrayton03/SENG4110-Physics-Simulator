@@ -5,9 +5,9 @@
 
 ## About 
 
-This project is for performing a test suite for a simple physics simulator that simulates a cannon shooting a ball across an empty field.
+This project is for performing a comprehensive test suite on a simple physics simulator.
 
-This simulator determines the amount of time it takes for a cannonball to land after being shot from a cannon.
+The simulator determines the amount of time it takes for a cannonball to land after being shot from a cannon while utilizing Object Oriented Programming principles.
 
 There are four inputs: gravity (newtons), cannonball type (rock, iron, glass), angle of cannon (0 to 90 degrees), and the cannon's height above the ground (meters).
 
